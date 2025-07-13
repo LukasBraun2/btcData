@@ -7,7 +7,7 @@
 </head>
 <body>
     <script>
-    fetch('btc_l2_log.json')
+    fetch('btcLog.json')
     .then(res => res.text())
     .then(text => {
         const lines = text.trim().split('\n').slice(-10);
