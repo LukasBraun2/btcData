@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>BTC L2 Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+    }
+  </style>
 </head>
 <body>
-    <script>
-    fetch('btcLog.json')
-    .then(res => res.text())
-    .then(text => {
-        const lines = text.trim().split('\n').slice(-10);
-        const data = lines.map(line => JSON.parse(line));
-        
-        const display = data.map((entry, i) => {
-        return `#${i + 1}
-    Time: ${new Date(entry.E).toLocaleTimeString()}
-    Top Bid: ${entry.b[0]}
-    Top Ask: ${entry.a[0]}
-    ---------------------------`;
-        }).join("\n");
+  <h1>Latest BTC Order Book Snapshots</h1>
+  <pre id="output">Loading...</pre>
 
-        document.getElementById('output').textContent = display;
-    });
-    </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
