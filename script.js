@@ -13,7 +13,8 @@ export function dataWrite() {
     const itemsFromStrg = getItemFromStorage();
     const snapshot = JSON.parse(data.data);
     itemsFromStrg.push(snapshot);
-    localStorage.setItem('items', JSON.stringify(snapshot));   
+    console.log(itemsFromStrg)
+    localStorage.setItem('items', JSON.stringify(itemsFromStrg));   
     console.log("Snapshot saved."); // For debug
 
   ws.onerror = (err) => {
