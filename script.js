@@ -1,22 +1,39 @@
-const fs = require("fs");
-const WebSocket = require("ws"); // WebSocket client for Node.js
+//const fs = require("fs");
+//const WebSocket = require("ws"); // WebSocket client for Node.js
+export function dataWrite() {
+  
+  alert("Button was clicked!");
+  const ws = new WebSocket("wss://stream.binance.us:9443/ws/btcusdt@depth");
 
-const ws = new WebSocket("wss://stream.binance.us:9443/ws/btcusdt@depth");
+  ws.onopen = () => {
+    console.log("WebSocket connection opened.");
+  };
 
-ws.on("open", () => {
-  console.log("WebSocket connection opened.");
-});
+  ws.onmessage = (data) => {
+    const itemsFromStrg = getItemFromStorage();
+    const snapshot = JSON.parse(data.data);
+    itemsFromStrg.push(snapshot);
+    localStorage.setItem('items', JSON.stringify(snapshot));   
+    console.log("Snapshot saved."); // For debug
 
-ws.on("message", (data) => {
-  const snapshot = JSON.parse(data);
-  fs.appendFileSync("btcLog.json", JSON.stringify(snapshot) + "\n");
-  console.log("Snapshot saved."); // For debug
+  ws.onerror = (err) => {
+    console.error("WebSocket error:", err);
+  };
 
-ws.on("error", (err) => {
-  console.error("WebSocket error:", err);
-});
+  ws.onclose = () => {
+    console.log("WebSocket closed.");
+  };
+  };
+  function getItemFromStorage() {
+      let itemsFromStrg;
 
-ws.on("close", () => {
-  console.log("WebSocket closed.");
-});
-});
+      if (localStorage.getItem('items') === null) {
+          itemsFromStrg = [];
+      } else {
+          itemsFromStrg = JSON.parse(localStorage.getItem('items'));
+          console.log(itemsFromStrg);
+      }
+      return itemsFromStrg;
+  }
+}
+
