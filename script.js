@@ -50,7 +50,7 @@ function getItemFromStorage() {
         const time = new Date(entry.E).toLocaleTimeString();
         const topBid = entry.b?.[0]?.[0] ?? "N/A";
         const topAsk = entry.a?.[0]?.[0] ?? "N/A";
-
+        //returns time top bid and top ask
         return `#${i + 1}
 Time: ${time}
 Top Bid: [${topBid}]
